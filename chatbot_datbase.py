@@ -122,5 +122,5 @@ if __name__ == "__main__":
 
 			#if(row_counter % 1000 == 0):
 			print("Total rows read: {}, Paired rows: {}, Time: {}".format(row_counter, paired_rows, str(datetime.now())))
-			print("Row: " + str(row))
+				#print("Row: " + str(row))
 
