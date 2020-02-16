@@ -97,11 +97,14 @@ if __name__ == "__main__":
 		for row in f:
 			row_counter += 1
 			row = json.loads(row)
-			parent_id = row["parent_id"].split('_')[1]  #only row["parent_id"] in 2015 comments
+			parent_id = row["parent_id"].split('_')[3:]  
+			#row["parent_id"] in 2015 comments
+			#row["parent_id"].split('_')[1] for some?
 			#try:
 			#	comment_id = row["id"] #row["name"] in 2015 comments
 			#except KeyError:
-			comment_id = 't1_' + row['id']
+			comment_id = row['link_id'][3:]
+			#comment_id = 't1_' + row['id']			
 			body = format_data(row["body"])
 			created_utc = row["created_utc"]
 			score = row["score"]
