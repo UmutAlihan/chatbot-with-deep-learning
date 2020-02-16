@@ -21,7 +21,7 @@ def format_data(data):
 def transaction_bldr(sql):
     global sql_transaction
     sql_transaction.append(sql)
-    if len(sql_transaction) > 1000:
+    if (int(len(sql_transaction)) > 1000):
         c.execute('BEGIN TRANSACTION')
         for s in sql_transaction:
             try:
@@ -94,7 +94,8 @@ if __name__ == '__main__':
     paired_rows = 0
 
     #with open('J:/chatdata/reddit_data/{}/RC_{}'.format(timeframe.split('-')[0],timeframe), buffering=1000) as f:
-    with open('/home/paperspace/reddit_comment_dumps/RC_{}'.format(timeframe), buffering=1000) as f:
+    with open('/home/uad/develop/chatbot-sentdex/data/reddit_{}.json'.format("201909"), buffering=1000) as f:
+        time.sleep(0.01)
         for row in f:
             #print(row)
             #time.sleep(555)
@@ -115,14 +116,14 @@ if __name__ == '__main__':
                     
                     existing_comment_score = find_existing_score(parent_id)
                     if existing_comment_score:
-                        if score > existing_comment_score:
+                        if int(score) > int(existing_comment_score):
                             if acceptable(body):
                                 sql_insert_replace_comment(comment_id,parent_id,parent_data,body,subreddit,created_utc,score)
                                 
                     else:
                         if acceptable(body):
                             if parent_data:
-                                if score >= 2:
+                                if int(score) >= 2:
                                     sql_insert_has_parent(comment_id,parent_id,parent_data,body,subreddit,created_utc,score)
                                     paired_rows += 1
                             else:
@@ -130,7 +131,7 @@ if __name__ == '__main__':
                 except Exception as e:
                     print(str(e))
                             
-            if row_counter % 100000 == 0:
+            if row_counter % 1 == 0:
                 print('Total Rows Read: {}, Paired Rows: {}, Time: {}'.format(row_counter, paired_rows, str(datetime.now())))
 
             if row_counter > start_row:
@@ -142,3 +143,4 @@ if __name__ == '__main__':
                     c.execute("VACUUM")
                     connection.commit()
                 
+
