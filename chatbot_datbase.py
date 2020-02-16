@@ -10,11 +10,11 @@ c = connection.cursor()
 
 def create_table():
 	c.execute("""CREATE TABLE IF NOT EXISTS parent_reply
-		(parent_id TEXT PRIMARY KEY, comment_id TEXT UNIQUE, parent TEXT, 
+		(parent_id TEXT PRIMARY KEY, comment_id TEXT UNIQUE, parent TEXT,
 		comment TEXT, subreddit TEXT, unix INT, score INT)""")
 
 def format_data(data):
-	data = data.replace("\n", " newlinechar ").replace("\r", " newlinechar ").replace('"',"'")
+	data = data.replace("\n", " newlinechar ").replace("\r", " newlinechar ").replace('"', "'")
 	return data
 
 def find_existing_score(pid):
@@ -120,6 +120,7 @@ if __name__ == "__main__":
 							else:
 								sql_insert_no_parent(comment_id, parent_id, body, subreddit, created_utc, score)
 
-			if(row_counter & 1000000 == 0):
-				print("Total rows read: {}, Paired rows: {}, Time: {}".format(row_counter, paired_rows, str(datetime.now())))
+			#if(row_counter and 1000000 == 0):
+			print("Total rows read: {}, Paired rows: {}, Time: {}".format(row_counter, paired_rows, str(datetime.now())))
+			print("Row: " + str(row))
 

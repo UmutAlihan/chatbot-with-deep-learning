@@ -1,0 +1,2 @@
+### read arbitrary lines from raw data
+tail -n+NUM file | head -n1
