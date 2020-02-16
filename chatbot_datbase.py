@@ -101,7 +101,7 @@ if __name__ == "__main__":
 			#try:
 			#	comment_id = row["id"] #row["name"] in 2015 comments
 			#except KeyError:
-				comment_id = 't1_' + row['id']
+			comment_id = 't1_' + row['id']
 			body = format_data(row["body"])
 			created_utc = row["created_utc"]
 			score = row["score"]
