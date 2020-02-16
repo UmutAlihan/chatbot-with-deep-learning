@@ -97,8 +97,8 @@ if __name__ == "__main__":
 		for row in f:
 			row_counter += 1
 			row = json.loads(row)
-			parent_id = row["parent_id"]
-			comment_id = row["id"]
+			parent_id = row["parent_id"].split('_')[1]  #only row["parent_id"] in 2015 comments
+			comment_id = row["id"] #row["name"] in 2015 comments
 			body = format_data(row["body"])
 			created_utc = row["created_utc"]
 			score = row["score"]
@@ -120,7 +120,7 @@ if __name__ == "__main__":
 							else:
 								sql_insert_no_parent(comment_id, parent_id, body, subreddit, created_utc, score)
 
-			#if(row_counter and 1000000 == 0):
+			#if(row_counter % 1000 == 0):
 			print("Total rows read: {}, Paired rows: {}, Time: {}".format(row_counter, paired_rows, str(datetime.now())))
 			print("Row: " + str(row))
 
