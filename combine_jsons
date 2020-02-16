@@ -5,3 +5,9 @@ import fileinput
 with open(outfilename, 'w') as fout, fileinput.input(filenames) as fin:
     for line in fin:
         fout.write(line)
+
+
+Dead simple method:
+cat *.json >> out
+mv out out.json
+
