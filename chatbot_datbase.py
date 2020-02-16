@@ -95,11 +95,10 @@ if __name__ == "__main__":
 
 	with open("/home/uad/develop/chatbot-sentdex/data/reddit_{}.json".format("201909"), buffering=1000) as f:
 		for row in f:
-			print(row)
 			row_counter += 1
 			row = json.loads(row)
 			parent_id = row["parent_id"]
-			comment_id = row["name"]
+			comment_id = row["id"]
 			body = format_data(row["body"])
 			created_utc = row["created_utc"]
 			score = row["score"]
@@ -108,7 +107,7 @@ if __name__ == "__main__":
 
 			parent_data = find_parent(parent_id)
 
-			if(score >= score_threshold):
+			if(int(score) >= score_threshold):
 				if(acceptable(body)):
 					existing_comment_score = find_existing_score(parent_id)
 					if(existing_comment_score):
@@ -121,5 +120,6 @@ if __name__ == "__main__":
 							else:
 								sql_insert_no_parent(comment_id, parent_id, body, subreddit, created_utc, score)
 
-			if(row_counter & 1000000 = 0):
+			if(row_counter & 1000000 == 0):
 				print("Total rows read: {}, Paired rows: {}, Time: {}".format(row_counter, paired_rows, str(datetime.now())))
+
