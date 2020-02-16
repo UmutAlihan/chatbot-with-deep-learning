@@ -1,0 +1,39 @@
+#(1)## Prepare dataset
+bq mk dataset_name
+bq ls
+
+#(2)## Run query
+use dataset: fh-bigquery:reddit_comments.2019_09
+
+	TABLE=reddit
+
+	# For all data up to 2019.
+	TABLE_REGEX="^201[5678]_[01][0-9]$"
+
+	QUERY="SELECT * \
+	  FROM TABLE_QUERY(\
+	  [fh-bigquery:reddit_comments], \
+	  \"REGEXP_MATCH(table_id, '${TABLE_REGEX?}')\" )"
+
+	# Run the query.
+	echo "${QUERY?}" | bq query \
+	  --n 0 \
+	  --batch --allow_large_results \
+	  --destination_table ${DATASET?}.${TABLE?} \
+	  --use_legacy_sql=true
+
+
+#(3)## Extract to a bucket
+https://cloud.google.com/bigquery/docs/exporting-data
+
+#(4)## Copy to local
+gsutil cp gs://..../*.json ~/path/to/local
+
+#(5)## Remove bq dataset
+bq rm -r reddit_comments_201909
+
+
+
+#sources:
+https://cloud.google.com/bigquery/docs/quickstarts/quickstart-command-line
+https://github.com/PolyAI-LDN/conversational-datasets/tree/master/reddit

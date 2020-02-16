@@ -1,0 +1,7 @@
+soruce:
+https://stackoverflow.com/questions/13613336/python-concatenate-text-files
+
+import fileinput
+with open(outfilename, 'w') as fout, fileinput.input(filenames) as fin:
+    for line in fin:
+        fout.write(line)
